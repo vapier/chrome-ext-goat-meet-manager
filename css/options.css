@@ -1,0 +1,62 @@
+/*
+ * Copyright 2020 The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+/**
+ * Styles used by the options page.
+ */
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #333;
+    color: white;
+  }
+
+  a {
+    color: #ddd;
+  }
+
+  /* Inherit setting in Chrome breaks the dropdown bg for some reason. */
+  div.option > select {
+    background-color: #222;
+  }
+}
+
+body {
+  margin-top: 0px;
+}
+
+#status {
+  float: right;
+  font-weight: bold;
+}
+
+div.option {
+  border-bottom: 1px dashed;
+  padding-bottom: 1px;
+  margin-bottom: 0.5em;
+}
+
+div.option > .title {
+  font-weight: bold;
+}
+
+div.option > .desc {
+}
+
+div.option > select {
+  font-size: inherit;
+  color: inherit;
+}
+
+div.option > input,
+div.option > select {
+  float: right;
+}
+
+div.links > a {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}

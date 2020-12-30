@@ -1,0 +1,15 @@
+# Various temp files and editor configs.
+*~
+\#*
+.#*
+*.swp
+.eslintcache
+.vscode
+
+# Stuff we build for distribution.
+dist
+*.zip
+
+# npm related dirs.
+node_modules
+package-lock.json

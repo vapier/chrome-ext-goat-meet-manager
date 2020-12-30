@@ -1,0 +1,43 @@
+{
+  "name": "goat-meet-manager",
+  "version": "0.0.0",
+  "author": "vapier@gmail.com",
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "ci": "npm-run-all --parallel 'format:* -- --check' lint",
+    "dist": "rm -rf dist gmm.zip && mkdir -p dist/html dist/images dist/js && npm-run-all --parallel dist:* && zip -r gmm.zip dist",
+    "dist:css": "postcss 'css/*.css' --dir dist/css/",
+    "dist:html": "set -e; for f in html/*.html; do html-minifier -c .html-minifier.conf $f >dist/$f; done",
+    "dist:js": "set -e; for f in js/*.js; do terser --config-file .terser.json $f --output dist/$f; done",
+    "dist:json": "json-minify <manifest.json >dist/manifest.json",
+    "dist:images": "cp images/*.png dist/images/",
+    "fix": "npm-run-all --parallel fix:*",
+    "fix:js": "eslint --cache --fix js/*.js",
+    "format": "npm-run-all --parallel 'format:* -- --write'",
+    "format:css": "prettier css/*.css",
+    "format:js": "prettier js/*.js .*.js",
+    "format:json": "prettier *.json",
+    "format:html": "prettier html/*.html",
+    "format:md": "prettier *.md",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:js": "eslint --cache js/*.js",
+    "lint:md": "markdownlint *.md",
+    "release": "npm-run-all --parallel ci dist",
+    "start": "http-server -a localhost -c-1 --cors ."
+  },
+  "devDependencies": {
+    "cssnano": "~4",
+    "eslint": "~7",
+    "eslint-plugin-jsdoc": "~30",
+    "html-minifier": "~4",
+    "http-server": "~0",
+    "json-minify": "^1.0.0",
+    "markdownlint-cli": "~0",
+    "npm-run-all": "~4",
+    "postcss": "~8",
+    "postcss-cli": "~8",
+    "prettier": "~2",
+    "terser": "~5"
+  },
+  "dependencies": {}
+}

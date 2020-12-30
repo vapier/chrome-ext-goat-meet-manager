@@ -1,0 +1,87 @@
+<html>
+  <title>GOAT Meet Manager Options</title>
+  <head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../css/options.css" />
+    <script type="module" src="../js/options.js"></script>
+  </head>
+  <body>
+    <div class="option">
+      <select id="action-behavior">
+        <option value="toggle-audio+popup" default>Toggle mic + popup</option>
+        <option value="toggle-audio">Toggle mic</option>
+        <option value="focus+popup">Focus + popup</option>
+        <option value="focus">Focus</option>
+        <option value="mute-audio+popup">Mute mic + popup</option>
+        <option value="mute-audio">Mute mic</option>
+        <option value="popup">Popup</option>
+      </select>
+      <div class="title">Action behavior</div>
+      <div class="desc">
+        What to do when clicking the action button?<br />
+        "Popup" provides a control panel for all meetings.<br />
+        The default toggles the microphone when there's one meeting, but
+        switches to popup for multiple meetings.
+      </div>
+    </div>
+
+    <div class="option">
+      <input type="checkbox" id="default-mute-audio" />
+      <div class="title">Mute audio by default</div>
+      <div class="desc">
+        Try to mute the microphone before starting the meeting.
+      </div>
+    </div>
+
+    <div class="option">
+      <input type="checkbox" id="default-mute-video" />
+      <div class="title">Mute video by default</div>
+      <div class="desc">
+        Try to mute the camera before starting the meeting.
+      </div>
+    </div>
+
+    <div class="option">
+      <input type="checkbox" id="autofocus" />
+      <div class="title">Automatically focus meeting tab</div>
+      <div class="desc">
+        When muting or unmuting, automatically switch to the active meeting.
+      </div>
+    </div>
+
+    <div class="option">
+      <input type="checkbox" id="debug" />
+      <div class="title">Enable verbose debug logging</div>
+      <div class="desc">Meant for developers or gathering bug reports.</div>
+    </div>
+
+    <div class="option">
+      <div class="title"><a href="" id="shortcuts">Keyboard shortcuts</a></div>
+      <div class="desc">Chrome manages these settings on its own page!</div>
+    </div>
+
+    <div class="links">
+      <a
+        href="https://github.com/vapier/chrome-ext-goat-meet-manager"
+        target="_blank"
+        noreferrer
+        >Homepage</a
+      >
+      <a
+        href="https://github.com/vapier/chrome-ext-goat-meet-manager/issues"
+        target="_blank"
+        noreferrer
+        >Support</a
+      >
+      <a
+        href="data:text/plain,[empty]"
+        id="log-download"
+        download="goat-meet.log"
+        >Export logs</a
+      >
+
+      <span id="status">Loading ...</span>
+    </div>
+  </body>
+</html>

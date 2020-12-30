@@ -1,0 +1,37 @@
+/*
+ * Copyright 2020 The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+/**
+ * Styles used by the popup control page.
+ */
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #333;
+    color: white;
+  }
+}
+
+div.title {
+  white-space: nowrap;
+}
+
+table {
+  white-space: nowrap;
+  font-size: inherit;
+}
+
+th {
+  border-bottom: 1px solid;
+}
+
+td {
+  text-align: center;
+}
+
+tr {
+  line-height: 1em;
+}
