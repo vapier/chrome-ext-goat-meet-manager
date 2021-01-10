@@ -330,6 +330,7 @@ class Meeting {
     // sync with the actual tab (like the index field).  So query the latest
     // state here to access it.
     chrome.tabs.get(this.port.sender.tab.id, (tab) => {
+      chrome.windows.update(tab.windowId, {focused: true});
       chrome.tabs.highlight({tabs: tab.index, windowId: tab.windowId});
     });
   }
