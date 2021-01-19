@@ -797,6 +797,12 @@ function onContextMenu(info, tab = undefined) {
     case 'feedback':
       window.open(issuesUrl, '_blank', 'noreferrer,noopener');
       break;
+
+    case 'cws': {
+      const url = `https://chrome.google.com/webstore/detail/${chrome.runtime.id}/reviews`;
+      window.open(url, '_blank', 'noreferrer,noopener');
+      break;
+    }
   }
 }
 
@@ -824,6 +830,12 @@ function initContextMenus() {
       type: 'normal',
       id: 'feedback',
       title: 'Report an issue',
+      contexts: ['browser_action'],
+    },
+    {
+      type: 'normal',
+      id: 'cws',
+      title: 'CWS Reviews',
       contexts: ['browser_action'],
     },
   ];
