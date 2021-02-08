@@ -105,7 +105,7 @@ function updateList(meetings) {
     const link = row.insertCell();
     link.className = 'name';
     link.id = meeting.id;
-    link.textContent = meeting.name;
+    link.textContent = meeting.title;
     link.onclick = focusOnClick;
 
     // The active column.

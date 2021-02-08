@@ -358,6 +358,7 @@ async function init() {
 
   // Send an initial update to the background page of the meeting state.
   connection.send('update', {
+    title: document.title,
     audioMuted: audio.dataset.isMuted === 'true',
     videoMuted: video.dataset.isMuted === 'true',
   });

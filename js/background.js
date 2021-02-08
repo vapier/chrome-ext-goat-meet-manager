@@ -285,6 +285,7 @@ Meetings.UNMUTED = Symbol('unmuted');
 class Meeting {
   constructor(port) {
     this.id = null;
+    this.title = null;
     this.port = port;
     this.active = false;
     this.prefer = false;
@@ -381,7 +382,11 @@ class Meeting {
    *
    * @param {!Object} param The new mic/cam settings.
    */
-  message_update({audioMuted, videoMuted}) {
+  message_update({title, audioMuted, videoMuted}) {
+    if (title) {
+      this.title = title.replace(/^Meet - /, '');
+    }
+
     const update =
       this.audioMuted !== audioMuted || this.videoMuted !== videoMuted;
     this.audioMuted = audioMuted;
@@ -424,6 +429,7 @@ function onInternalPageMessage(port, message) {
         result.push({
           id: meeting.id,
           name: meeting.port.name,
+          title: meeting.title,
           prefer: meeting.prefer,
           active: meeting.active,
           audioMuted: meeting.audioMuted,
