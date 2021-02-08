@@ -96,40 +96,39 @@ function updateList(meetings) {
 
     // The default column.
     const select = row.insertCell();
+    select.className = 'default';
     select.id = meeting.id;
     select.textContent = meeting.prefer ? '☑' : '☐';
-    select.style.cursor = 'pointer';
     select.onclick = defaultOnClick;
 
     // The meeting id column.
     const link = row.insertCell();
+    link.className = 'name';
     link.id = meeting.id;
     link.textContent = meeting.name;
-    link.style.cursor = 'pointer';
-    link.style.textDecoration = 'underline';
     link.onclick = focusOnClick;
 
     // The active column.
-    row.insertCell().textContent = meeting.active ? '☑' : '-';
+    const active = row.insertCell();
+    active.className = 'active';
+    active.textContent = meeting.active ? '☑' : '-';
 
     // The audio settings column.
     const audio = row.insertCell();
+    audio.className = 'audio';
     audio.id = meeting.id;
     audio.appendChild(
       meeting.audioMuted ? newImg('mic-off-96') : newImg('mic-on-96'),
     );
-    audio.style.cursor = 'pointer';
-    audio.style.textDecoration = 'underline';
     audio.onclick = toggleAudioOnClick;
 
     // The video settings column.
     const video = row.insertCell();
+    video.className = 'video';
     video.id = meeting.id;
     video.appendChild(
       meeting.videoMuted ? newImg('mic-off-96') : newImg('mic-on-96'),
     );
-    video.style.cursor = 'pointer';
-    video.style.textDecoration = 'underline';
     video.onclick = toggleVideoOnClick;
   });
 }

@@ -15,10 +15,6 @@
   }
 }
 
-div.title {
-  white-space: nowrap;
-}
-
 table {
   white-space: nowrap;
   font-size: inherit;
@@ -34,4 +30,26 @@ td {
 
 tr {
   line-height: 1em;
+}
+
+td.default {
+  cursor: pointer;
+}
+
+td.name {
+  cursor: pointer;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 50ch;
+}
+
+td.active {
+  cursor: default;
+}
+
+td.audio,
+td.video {
+  cursor: pointer;
+  text-decoration: underline;
 }
