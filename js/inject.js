@@ -28,11 +28,13 @@ let defaultMuteVideo;
  * @param {...any} args
  */
 function log(level, ...args) {
-  if (debugEnabled) {
+  if (debugEnabled || !connection.port) {
     console.log(...args);
   }
 
-  connection.send('log', {page: 'inject', level, message: args.join(' ')});
+  if (connection.port) {
+    connection.send('log', {page: 'inject', level, message: args.join(' ')});
+  }
 }
 
 /**
