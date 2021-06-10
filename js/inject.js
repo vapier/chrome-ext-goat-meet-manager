@@ -51,7 +51,11 @@ function dbg(...args) {
 }
 
 // Matches both microphone & video buttons.
-const buttonSelector = '.U26fgb.JRY2Pb.mUbCce.kpROve.uJNmj';
+// <div jsshadow="" role="button" class="U26fgb ...
+// If this changes, can probably locate new one with:
+// document.querySelectorAll('div[aria-label="Turn on microphone (ctrl + d)"]')
+// document.querySelectorAll('div[aria-label="Turn on camera (ctrl + e)"]')
+const buttonSelector = '.U26fgb.JRY2Pb.mUbCce.kpROve.yBiuPb';
 // Matches only the hangup button.
 const hangupSelector = '.U26fgb.JRY2Pb.mUbCce.kpROve.GaONte';
 // Matches the internal state of the buttons (mute/etc...).
