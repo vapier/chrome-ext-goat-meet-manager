@@ -337,6 +337,15 @@ function defaultMuteMeeting() {
  */
 async function init() {
   let audio, video, aState, vState;
+  // If the system is slow, don't hammer it trying to get access to the
+  // elements as fast as possible.  1 second seems like a reasonable balance
+  // for responsiveness in the extension icon.  Even on fast systems, Meet
+  // can take 1 or 2 seconds to load.  We don't go lower as background tabs
+  // get slowed down significantly regardless of the system performance.
+  let pollRate = 1000;
+  // If we poll a lot, we might not be matching anything because GVC changed.
+  // Slowly back off so we don't poll forever.
+  let pollCount = 0;
 
   // Wait for all the mic/cam elements to show up.
   while (true) {
@@ -352,12 +361,11 @@ async function init() {
     }
 
     dbg('retrying init ...');
-    // If the system is slow, don't hammer it trying to get access to the
-    // elements as fast as possible.  1 second seems like a reasonable balance
-    // for responsiveness in the extension icon.  Even on fast systems, Meet
-    // can take 1 or 2 seconds to load.  We don't go lower as background tabs
-    // get slowed down significantly regardless of the system performance.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (pollCount++ >= 300) {
+      pollCount = 0;
+      pollRate *= 2;
+    }
+    await new Promise((resolve) => setTimeout(resolve, pollRate));
   }
 
   // Send an initial update to the background page of the meeting state.
