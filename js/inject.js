@@ -382,6 +382,19 @@ async function init() {
     videoMuted: video.dataset.isMuted === 'true',
   });
 
+  // When reiniting, clean up previous observer.
+  if (observer) {
+    observer.disconnect();
+  }
+  // Watch for changes to the mic/cam to notify the background page.  We start
+  // with the UI elements in case the state elements go missing, but the code
+  // seems to be inconsistent as to which elements actually see data updates.
+  // So this helps keep things semi-working, but we still want to fallback to
+  // finding explicit state elements to bind to below.
+  observer = new MutationObserver(onMutations);
+  observer.observe(audio, {attributes: true});
+  observer.observe(video, {attributes: true});
+
   // Wait for all the state elements to show up.
   pollRate = 1000;
   pollCount = 0;
