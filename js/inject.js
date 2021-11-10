@@ -50,6 +50,15 @@ function dbg(...args) {
   log('debug', ...args);
 }
 
+/**
+ * Sleep for a bit.
+ *
+ * @param {number} duration
+ */
+async function sleep(duration) {
+  await new Promise((resolve) => setTimeout(resolve, duration));
+}
+
 // Matches both microphone & video buttons.
 // <div jsshadow="" role="button" class="U26fgb ...
 // If this changes, can probably locate new one with:
@@ -347,25 +356,23 @@ async function init() {
   // Slowly back off so we don't poll forever.
   let pollCount = 0;
 
-  // Wait for all the mic/cam elements to show up.
+  // Wait for all the UI mic/cam elements to show up.
   while (true) {
     audio = getAudioElement();
     video = getVideoElement();
-    aState = getAudioTracker();
-    vState = getVideoTracker();
 
-    dbg('init', audio?.dataset, video?.dataset, aState, vState);
+    dbg('UI init', audio?.dataset, video?.dataset);
 
-    if (audio && video && aState && vState) {
+    if (audio && video) {
       break;
     }
 
-    dbg('retrying init ...');
+    dbg('retrying UI init ...');
     if (pollCount++ >= 300) {
       pollCount = 0;
       pollRate *= 2;
     }
-    await new Promise((resolve) => setTimeout(resolve, pollRate));
+    await sleep(pollRate);
   }
 
   // Send an initial update to the background page of the meeting state.
@@ -374,6 +381,27 @@ async function init() {
     audioMuted: audio.dataset.isMuted === 'true',
     videoMuted: video.dataset.isMuted === 'true',
   });
+
+  // Wait for all the state elements to show up.
+  pollRate = 1000;
+  pollCount = 0;
+  while (true) {
+    aState = getAudioTracker();
+    vState = getVideoTracker();
+
+    dbg('state init', aState, vState);
+
+    if (aState && vState) {
+      break;
+    }
+
+    dbg('retrying state init ...');
+    if (pollCount++ >= 300) {
+      pollCount = 0;
+      pollRate *= 2;
+    }
+    await sleep(pollRate);
+  }
 
   // When reiniting, clean up previous observer.
   if (observer) {
