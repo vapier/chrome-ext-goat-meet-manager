@@ -511,7 +511,7 @@ function onConnect(port) {
 /**
  * Invoked when user clicks the extension icon.
  *
- * @see https://developer.chrome.com/extensions/browserAction/#event-onClicked
+ * @see https://developer.chrome.com/extensions/action/#event-onClicked
  * @param {!Tab} tab The active tab.
  * @private
  */
@@ -672,19 +672,19 @@ class Badge {
       if (typeof icon === 'string') {
         icon = {19: `../images/${icon}-96.png`};
       }
-      chrome.browserAction.setIcon({path: icon});
+      chrome.action.setIcon({path: icon});
     }
     if (title !== undefined) {
-      chrome.browserAction.setTitle({title});
+      chrome.action.setTitle({title});
     }
     if (popup !== undefined) {
-      chrome.browserAction.setPopup({popup});
+      chrome.action.setPopup({popup});
     }
     if (text !== undefined) {
-      chrome.browserAction.setBadgeText({text});
+      chrome.action.setBadgeText({text});
     }
     if (color !== undefined) {
-      chrome.browserAction.setBadgeBackgroundColor({color});
+      chrome.action.setBadgeBackgroundColor({color});
     }
   }
 
@@ -801,12 +801,12 @@ function onContextMenu(info, tab = undefined) {
     }
 
     case 'feedback':
-      window.open(issuesUrl, '_blank', 'noreferrer,noopener');
+      chrome.tabs.create({url: issuesUrl});
       break;
 
     case 'cws': {
       const url = `https://chrome.google.com/webstore/detail/${chrome.runtime.id}/reviews`;
-      window.open(url, '_blank', 'noreferrer,noopener');
+      chrome.tabs.create({url});
       break;
     }
   }
@@ -824,25 +824,25 @@ function initContextMenus() {
       type: 'normal',
       id: 'focus',
       title: 'Focus active meeting',
-      contexts: ['browser_action'],
+      contexts: ['action'],
     },
     {
       type: 'normal',
       id: 'clear-default',
       title: 'Clear default selection',
-      contexts: ['browser_action'],
+      contexts: ['action'],
     },
     {
       type: 'normal',
       id: 'feedback',
       title: 'Report an issue',
-      contexts: ['browser_action'],
+      contexts: ['action'],
     },
     {
       type: 'normal',
       id: 'cws',
       title: 'CWS Reviews',
-      contexts: ['browser_action'],
+      contexts: ['action'],
     },
   ];
   entries.forEach((entry) => chrome.contextMenus.create(entry));
@@ -857,13 +857,13 @@ globalThis.meetings = meetings;
 function init() {
   badge.update();
   chrome.runtime.onConnect.addListener(onConnect);
-  chrome.browserAction.onClicked.addListener(onActionClicked);
+  chrome.action.onClicked.addListener(onActionClicked);
   chrome.commands.onCommand.addListener(onCommand);
   initContextMenus();
   chrome.storage.sync.onChanged.addListener(onStorageChanged);
 }
 
-window.addEventListener('error', (e) => {
+globalThis.addEventListener('error', (e) => {
   logging.error('unhandled error', e.error.stack);
 });
 chrome.storage.sync.get((settings) => {

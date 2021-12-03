@@ -2,9 +2,9 @@
   "short_name": "GOAT meet manager",
   "name": "GOAT Meet Manager",
   "description": "Control Google Meet mute (audio+video) status from anywhere.",
-  "version": "0.9",
+  "version": "1.0",
   "homepage_url": "https://github.com/vapier/chrome-ext-goat-meet-manager",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "icons": {
     "16": "images/icon-16.png",
     "19": "images/icon-19.png",
@@ -22,10 +22,10 @@
     "open_in_tab": false
   },
 
-  "browser_action": {},
+  "action": {},
   "background": {
-    "persistent": false,
-    "page": "html/background.html"
+    "type": "module",
+    "service_worker": "js/background.js"
   },
 
   "content_scripts": [
